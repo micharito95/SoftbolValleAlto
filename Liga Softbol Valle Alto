@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga Softbol Valle Alto - Tabla de Posiciones</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter para una apariencia moderna */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Fondo gris claro */
+        }
+        /* Estilos personalizados para la tabla */
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Borde inferior suave */
+        }
+        th {
+            background-color: #3b82f6; /* Azul primario para encabezados */
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc; /* Filas pares con un color ligeramente diferente */
+        }
+        tr:hover {
+            background-color: #e0f2fe; /* Efecto hover para las filas */
+        }
+        /* Bordes redondeados para la tabla */
+        table.rounded-lg {
+            border-radius: 0.5rem;
+            overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+        <!-- Encabezado con logos y título de la liga -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 flex items-center justify-between rounded-t-lg">
+            <img src="https://placehold.co/80x80/ffffff/000000?text=LOGO%20LIGA" alt="Logo Liga Softbol Valle Alto" class="h-20 w-20 rounded-full border-4 border-white shadow-lg">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white text-center flex-grow">
+                Liga Softbol Valle Alto
+            </h1>
+            <img src="https://placehold.co/80x80/ffffff/000000?text=LOGO%20GRD" alt="Logo GRD-VIDAFEL" class="h-20 w-20 rounded-full border-4 border-white shadow-lg">
+        </div>
+
+        <!-- Sección de Líder General -->
+        <div class="p-6 bg-blue-50 border-b border-blue-200 text-center">
+            <h2 class="text-2xl font-bold text-blue-800 mb-3">Líder General</h2>
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <img src="unnamed.png" alt="Logo GRD-VIDAFEL" class="w-24 h-24 rounded-full border-4 border-green-500 shadow-lg">
+                <span class="text-3xl font-extrabold text-blue-900">GRD-VIDAFEL</span>
+                <span class="text-4xl font-bold text-yellow-500 animate-bounce">🏆</span> <!-- Icono de trofeo más grande y animado -->
+            </div>
+        </div>
+
+        <!-- Tabla de Posiciones -->
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">STANDING A</h2>
+            <div class="overflow-x-auto rounded-lg shadow-md">
+                <table id="standing-table" class="min-w-full bg-white rounded-lg">
+                    <thead>
+                        <tr>
+                            <th class="rounded-tl-lg">#</th>
+                            <th>Equipo</th>
+                            <th>JJ</th>
+                            <th>JG</th>
+                            <th>JE</th>
+                            <th>JP</th>
+                            <th>CF</th>
+                            <th>CC</th>
+                            <th>DIF</th>
+                            <th class="rounded-tr-lg">AVG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>GRD-VIDAFEL</td><td>7</td><td>6</td><td>0</td><td>1</td><td>122</td><td>68</td><td>54</td><td>0.857</td></tr>
+                        <tr><td>2</td><td>RANCHITO VILLA</td><td>10</td><td>8</td><td>0</td><td>2</td><td>125</td><td>66</td><td>59</td><td>0.800</td></tr>
+                        <tr><td>3</td><td>VI FIT</td><td>8</td><td>6</td><td>0</td><td>2</td><td>119</td><td>84</td><td>35</td><td>0.750</td></tr>
+                        <tr><td>4</td><td>OSOS</td><td>7</td><td>5</td><td>0</td><td>2</td><td>109</td><td>62</td><td>47</td><td>0.714</td></tr>
+                        <tr><td>5</td><td>PRIMOS</td><td>9</td><td>6</td><td>0</td><td>3</td><td>127</td><td>96</td><td>31</td><td>0.667</td></tr>
+                        <tr><td>6</td><td>CERVECEROS</td><td>8</td><td>5</td><td>0</td><td>3</td><td>100</td><td>101</td><td>-1</td><td>0.625</td></tr>
+                        <tr><td>7</td><td>INFIERNOS</td><td>9</td><td>4</td><td>0</td><td>5</td><td>76</td><td>93</td><td>-17</td><td>0.444</td></tr>
+                        <tr><td>8</td><td>STIZZY BOYS</td><td>8</td><td>3</td><td>0</td><td>5</td><td>85</td><td>102</td><td>-17</td><td>0.375</td></tr>
+                        <tr><td>9</td><td>ROCKIN ROLL</td><td>8</td><td>3</td><td>0</td><td>5</td><td>82</td><td>116</td><td>-34</td><td>0.375</td></tr>
+                        <tr><td>10</td><td>PALMEIRO</td><td>6</td><td>2</td><td>0</td><td>4</td><td>53</td><td>81</td><td>-28</td><td>0.333</td></tr>
+                        <tr><td>11</td><td>BATALLOSOS</td><td>8</td><td>1</td><td>0</td><td>7</td><td>66</td><td>113</td><td>-47</td><td>0.125</td></tr>
+                        <tr><td>12</td><td>AMIGOS LEO</td><td>8</td><td>1</td><td>0</td><td>7</td><td>34</td><td>87</td><td>-53</td><td>0.125</td></tr>
+                        <tr><td>13</td><td>CAIMANES</td><td>9</td><td>1</td><td>0</td><td>8</td><td>69</td><td>149</td><td>-80</td><td>0.111</td></tr>
+                        <tr><td>14</td><td>GALLOS</td><td>10</td><td>1</td><td>0</td><td>9</td><td>99</td><td>138</td><td>-39</td><td>0.100</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sección de Líderes AVG -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Líderes AVG</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Tarjeta de Jugador Líder -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-blue-200">
+                    <img src="https://placehold.co/80x80/FFD700/000000?text=AVG" alt="Imagen de Mario Orduño" class="w-20 h-20 rounded-full mb-2 border-2 border-yellow-400">
+                    <p class="text-xl font-semibold text-gray-800">MARIO ORDUÑO</p>
+                    <p class="text-sm text-gray-600">OSOS</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2">0.842</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-blue-200">
+                    <img src="https://placehold.co/80x80/FFD700/000000?text=AVG" alt="Imagen de Ramon Valenzuela" class="w-20 h-20 rounded-full mb-2 border-2 border-yellow-400">
+                    <p class="text-xl font-semibold text-gray-800">RAMON VALENZUELA</p>
+                    <p class="text-sm text-gray-600">RANCHITO VILLA</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2">0.808</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-blue-200">
+                    <img src="https://placehold.co/80x80/FFD700/000000?text=AVG" alt="Imagen de Guadalupe Felix" class="w-20 h-20 rounded-full mb-2 border-2 border-yellow-400">
+                    <p class="text-xl font-semibold text-gray-800">GUADALUPE FELIX</p>
+                    <p class="text-sm text-gray-600">OSOS</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2">0.792</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-blue-200">
+                    <img src="https://placehold.co/80x80/FFD700/000000?text=AVG" alt="Imagen de Abraham Borraz" class="w-20 h-20 rounded-full mb-2 border-2 border-yellow-400">
+                    <p class="text-xl font-semibold text-gray-800">ABRAHAM BORRAZ</p>
+                    <p class="text-sm text-gray-600">PALMEIRO</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2">0.739</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-blue-200">
+                    <img src="https://placehold.co/80x80/FFD700/000000?text=AVG" alt="Imagen de Miguel Leyva" class="w-20 h-20 rounded-full mb-2 border-2 border-yellow-400">
+                    <p class="text-xl font-semibold text-gray-800">MIGUEL LEYVA</p>
+                    <p class="text-sm text-gray-600">GRD-VIDAFEL</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2">0.720</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Líderes HR -->
+        <div class="p-6 bg-gray-100 border-t border-gray-200 rounded-b-lg">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Líderes HR</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Tarjeta de Jugador Líder -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-red-200">
+                    <img src="https://placehold.co/80x80/EF4444/FFFFFF?text=HR" alt="Imagen de Mario Orduño" class="w-20 h-20 rounded-full mb-2 border-2 border-red-500">
+                    <p class="text-xl font-semibold text-gray-800">MARIO ORDUÑO</p>
+                    <p class="text-sm text-gray-600">OSOS</p>
+                    <p class="text-2xl font-bold text-red-600 mt-2">5 HR</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-red-200">
+                    <img src="https://placehold.co/80x80/EF4444/FFFFFF?text=HR" alt="Imagen de Ricardo Montoya" class="w-20 h-20 rounded-full mb-2 border-2 border-red-500">
+                    <p class="text-xl font-semibold text-gray-800">RICARDO MONTOYA</p>
+                    <p class="text-sm text-gray-600">OSOS</p>
+                    <p class="text-2xl font-bold text-red-600 mt-2">5 HR</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-red-200">
+                    <img src="https://placehold.co/80x80/EF4444/FFFFFF?text=HR" alt="Imagen de Juan Carlos Ponce" class="w-20 h-20 rounded-full mb-2 border-2 border-red-500">
+                    <p class="text-xl font-semibold text-gray-800">JUAN CARLOS PONCE</p>
+                    <p class="text-sm text-gray-600">PALMEIRO</p>
+                    <p class="text-2xl font-bold text-red-600 mt-2">5 HR</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-red-200">
+                    <img src="https://placehold.co/80x80/EF4444/FFFFFF?text=HR" alt="Imagen de William Duran" class="w-20 h-20 rounded-full mb-2 border-2 border-red-500">
+                    <p class="text-xl font-semibold text-gray-800">WILLIAM DURAN</p>
+                    <p class="text-sm text-gray-600">PRIMOS</p>
+                    <p class="text-2xl font-bold text-red-600 mt-2">5 HR</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center border border-red-200">
+                    <img src="https://placehold.co/80x80/EF4444/FFFFFF?text=HR" alt="Imagen de Rafael Castillo" class="w-20 h-20 rounded-full mb-2 border-2 border-red-500">
+                    <p class="text-xl font-semibold text-gray-800">RAFAEL CASTILLO</p>
+                    <p class="text-sm text-gray-600">VI FIT</p>
+                    <p class="text-2xl font-bold text-red-600 mt-2">5 HR</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Generación de Comentario con Gemini API -->
+        <div class="p-6 bg-blue-50 border-t border-blue-200 rounded-b-lg text-center">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">¡Genera un comentario para WhatsApp!</h2>
+            <button id="generate-comment-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center mx-auto">
+                <span id="button-text">Generar Comentario ✨</span>
+                <div id="loading-spinner" class="loading-spinner ml-2 hidden"></div>
+            </button>
+            <div id="generated-comment-container" class="mt-6 p-4 bg-white rounded-lg shadow-md border border-gray-200 hidden">
+                <p id="generated-comment" class="text-gray-700 text-lg italic mb-4"></p>
+                <button id="copy-comment-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-full text-sm">
+                    Copiar al Portapapeles
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generate-comment-btn').addEventListener('click', async () => {
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const commentContainer = document.getElementById('generated-comment-container');
+            const generatedComment = document.getElementById('generated-comment');
+            const copyButton = document.getElementById('copy-comment-btn');
+
+            // Mostrar spinner y deshabilitar botón
+            buttonText.textContent = 'Generando...';
+            loadingSpinner.classList.remove('hidden');
+            commentContainer.classList.add('hidden'); // Ocultar comentario anterior
+            generatedComment.textContent = ''; // Limpiar comentario anterior
+            copyButton.classList.add('hidden'); // Ocultar botón de copiar
+            document.getElementById('generate-comment-btn').disabled = true;
+
+            try {
+                // Obtener datos de la tabla de posiciones
+                const table = document.getElementById('standing-table');
+                const rows = table.querySelectorAll('tbody tr');
+                let standingsData = [];
+                rows.forEach(row => {
+                    const cols = row.querySelectorAll('td');
+                    if (cols.length > 0) {
+                        standingsData.push({
+                            rank: cols[0].textContent,
+                            team: cols[1].textContent,
+                            jj: cols[2].textContent,
+                            jg: cols[3].textContent,
+                            jp: cols[5].textContent,
+                            avg: cols[9].textContent
+                        });
+                    }
+                });
+
+                // Construir el prompt para Gemini
+                let prompt = "Genera un comentario entusiasta y breve (máximo 3 oraciones) para un grupo de WhatsApp sobre la tabla de posiciones actual de la Liga Softbol Valle Alto. Menciona al líder general (GRD-VIDAFEL) y destaca a los 3 primeros equipos y sus récords (JJ: Juegos Jugados, JG: Juegos Ganados, JP: Juegos Perdidos, AVG: Promedio de Bateo). Aquí están los datos principales:\n\n";
+                
+                // Añadir los 3 primeros equipos al prompt
+                for (let i = 0; i < Math.min(3, standingsData.length); i++) {
+                    const team = standingsData[i];
+                    prompt += `${team.rank}. ${team.team} (JJ: ${team.jj}, JG: ${team.jg}, JP: ${team.jp}, AVG: ${team.avg})\n`;
+                }
+                prompt += "\n¡Usa emojis para hacerlo más dinámico!";
+
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // La clave API se proporciona en tiempo de ejecución
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                let response;
+                let result;
+                let retries = 0;
+                const maxRetries = 5;
+                const baseDelay = 1000; // 1 second
+
+                while (retries < maxRetries) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (response.status === 429) { // Too Many Requests
+                            retries++;
+                            const delay = baseDelay * Math.pow(2, retries);
+                            await new Promise(res => setTimeout(res, delay));
+                            continue;
+                        }
+                        result = await response.json();
+                        break; // Success, exit loop
+                    } catch (error) {
+                        console.error("Fetch error:", error);
+                        retries++;
+                        const delay = baseDelay * Math.pow(2, retries);
+                        await new Promise(res => setTimeout(res, delay));
+                    }
+                }
+
+                if (result && result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    generatedComment.textContent = text;
+                    commentContainer.classList.remove('hidden');
+                    copyButton.classList.remove('hidden'); // Mostrar botón de copiar
+                } else {
+                    generatedComment.textContent = "No se pudo generar el comentario. Inténtalo de nuevo.";
+                    commentContainer.classList.remove('hidden');
+                    console.error("Unexpected API response structure:", result);
+                }
+            } catch (error) {
+                generatedComment.textContent = "Error al conectar con el servicio de IA. Inténtalo de nuevo.";
+                commentContainer.classList.remove('hidden');
+                console.error("Error calling Gemini API:", error);
+            } finally {
+                // Ocultar spinner y habilitar botón
+                buttonText.textContent = 'Generar Comentario ✨';
+                loadingSpinner.classList.add('hidden');
+                document.getElementById('generate-comment-btn').disabled = false;
+            }
+        });
+
+        document.getElementById('copy-comment-btn').addEventListener('click', () => {
+            const commentText = document.getElementById('generated-comment').textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = commentText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('¡Comentario copiado al portapapeles!'); // Usar un mensaje más amigable si es posible en un entorno real
+        });
+    </script>
+</body>
+</html>
